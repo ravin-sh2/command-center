@@ -1,122 +1,63 @@
 # Command Center
 
-A polished personal productivity dashboard built with React and Vite. Command Center brings everyday utilities into one focused interface: notes, tasks, calculations, timers, quick links, password generation, map search, music launchers, and a small 2248-style puzzle board.
+Command Center is a sleek personal productivity dashboard that brings small everyday tools into one focused workspace. It is designed as a polished front-end project: practical enough to use, visual enough to show, and compact enough to understand at a glance.
 
-Live demo: https://ravin-sh2.github.io/command-center/
+**Live demo:** https://ravin-sh2.github.io/command-center/
 
-## Highlights
+## What It Does
 
-- Clean responsive command-dashboard interface
-- Theme switcher with Command, Light Desk, and Night Ops modes
+Command Center combines a set of useful tools inside a responsive dashboard interface:
+
 - Calculator with recent calculation history
-- Notes and tasks saved locally in the browser
+- Notes and task manager with local browser saving
 - Focus timer with preset sessions
-- Weather planner mock tool for planning around conditions
-- Scannable QR code generator with editable payload text
-- Local password generator using the browser crypto API
-- Map search launcher for Google Maps, OpenStreetMap, and Bing Maps
-- Music mode launcher for focus playlists
-- Small playable 2248-style merge board
+- Weather planner interface
+- Scannable QR code generator
+- Local password generator
+- Map search launcher
+- Music/focus mode launcher
+- Small playable 2248-style puzzle board
 
-## Tech Stack
+## Design Goals
 
-- React 19
-- Vite 8
+The project is built around a clean command-console feel rather than a typical landing page. The interface uses compact panels, strong spacing, practical controls, and a theme system so the app feels like an actual dashboard rather than a template.
+
+The app includes three visual modes:
+
+- **Command**: warm operational dashboard style
+- **Light Desk**: brighter productivity workspace
+- **Night Ops**: darker high-contrast mode
+
+## Built With
+
+- React
+- Vite
 - Framer Motion
-- Lucide React icons
-- CSS custom properties and responsive CSS grid
-- GitHub Pages deployment with GitHub Actions
+- Lucide React
+- QRCode
+- CSS Grid and custom CSS variables
 
-## Getting Started
+## Privacy Notes
 
-Clone the repository:
+Command Center runs fully in the browser. Notes, tasks, and calculator history are stored with `localStorage`. Generated passwords are created locally with the browser crypto API and are not sent to a server.
 
-```bash
-git clone https://github.com/ravin-sh2/command-center.git
-cd command-center
-```
+## Preview
 
-Install dependencies:
-
-```bash
-npm install
-```
-
-Run the development server:
-
-```bash
-npm run dev
-```
-
-Build for production:
-
-```bash
-npm run build
-```
-
-Check code quality:
-
-```bash
-npm run lint
-```
-
-Preview the production build locally:
-
-```bash
-npm run preview
-```
-
-## Deployment
-
-This project is configured for GitHub Pages with:
-
-```js
-base: "/command-center/"
-```
-
-The deployment workflow lives in:
-
-```text
-.github/workflows/deploy.yml
-```
-
-To publish it:
-
-1. Push the project to the `main` branch.
-2. Open the repository on GitHub.
-3. Go to **Settings > Pages**.
-4. Set **Source** to **GitHub Actions**.
-5. Run the deploy workflow or push a new commit.
-
-The deployed site will be available at:
+The project is deployed with GitHub Pages:
 
 ```text
 https://ravin-sh2.github.io/command-center/
 ```
 
-## Project Structure
+## Run Locally
 
-```text
-command-center/
-|-- public/
-|-- src/
-|   |-- assets/
-|   |-- App.jsx
-|   |-- App.css
-|   |-- index.css
-|   `-- main.jsx
-|-- .github/workflows/deploy.yml
-|-- index.html
-|-- package.json
-`-- vite.config.js
+```bash
+git clone https://github.com/ravin-sh2/command-center.git
+cd command-center
+npm install
+npm run dev
 ```
-
-## Notes
-
-- Notes, tasks, and calculator history are stored in `localStorage`.
-- Passwords are generated locally in the browser and are not sent anywhere.
-- The QR tool uses the `qrcode` package to generate standards-compliant scannable QR codes.
 
 ## Author
 
-Built by Ravin Shalmashi.
+Built by **Ravin Shalmashi**.
