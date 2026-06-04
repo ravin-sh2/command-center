@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import QRCode from "qrcode";
 import {
   Activity,
   ArrowUpRight,
@@ -85,7 +86,7 @@ const toolCatalog = [
     name: "QR Studio",
     icon: QrCode,
     tag: "Share",
-    detail: "Make a sharp QR-style code card.",
+    detail: "Generate a scannable QR code.",
     status: "Exportable",
     size: "medium",
   },
@@ -418,27 +419,6 @@ function WeatherTool() {
   );
 }
 
-function pseudoQrCells(value) {
-  const text = value || "Command Center";
-  const cells = [];
-  for (let row = 0; row < 21; row += 1) {
-    for (let col = 0; col < 21; col += 1) {
-      const finder =
-        (row < 7 && col < 7) ||
-        (row < 7 && col > 13) ||
-        (row > 13 && col < 7);
-      const finderInner =
-        (row > 1 && row < 5 && col > 1 && col < 5) ||
-        (row > 1 && row < 5 && col > 15 && col < 19) ||
-        (row > 15 && row < 19 && col > 1 && col < 5);
-      const char = text.charCodeAt((row * 7 + col) % text.length);
-      const active = finder ? (finderInner || row === 0 || col === 0 || row === 6 || col === 6 || col === 14 || row === 14 || row === 20 || col === 20) : (char + row * 13 + col * 7) % 5 < 2;
-      cells.push({ row, col, active });
-    }
-  }
-  return cells;
-}
-
 function generatePasswordValue(length, includeSymbols) {
   const letters = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
   const numbers = "23456789";
@@ -451,7 +431,37 @@ function generatePasswordValue(length, includeSymbols) {
 
 function QrTool() {
   const [value, setValue] = useState("https://command-center.local");
-  const cells = useMemo(() => pseudoQrCells(value), [value]);
+  const [qrImage, setQrImage] = useState("");
+  const [qrError, setQrError] = useState("");
+
+  useEffect(() => {
+    let canceled = false;
+
+    QRCode.toDataURL(value || "Command Center", {
+      color: {
+        dark: "#111318",
+        light: "#ffffff",
+      },
+      errorCorrectionLevel: "M",
+      margin: 3,
+      scale: 8,
+      width: 420,
+    })
+      .then((dataUrl) => {
+        if (canceled) return;
+        setQrImage(dataUrl);
+        setQrError("");
+      })
+      .catch(() => {
+        if (canceled) return;
+        setQrImage("");
+        setQrError("This payload is too large to encode as a QR code.");
+      });
+
+    return () => {
+      canceled = true;
+    };
+  }, [value]);
 
   const copyValue = async () => {
     await navigator.clipboard?.writeText(value);
@@ -459,15 +469,14 @@ function QrTool() {
 
   return (
     <div className="qr-tool">
-      <section className="qr-preview" aria-label="QR preview">
-        {cells.map((cell) => (
-          <span className={cell.active ? "active" : ""} key={`${cell.row}-${cell.col}`} />
-        ))}
+      <section className="qr-preview image-preview" aria-label="Scannable QR code preview">
+        {qrImage ? <img src={qrImage} alt="Generated QR code" /> : <span />}
       </section>
 
       <section className="qr-controls">
         <p className="section-kicker">Payload</p>
         <textarea value={value} onChange={(event) => setValue(event.target.value)} />
+        {qrError && <p className="tool-warning">{qrError}</p>}
         <button className="command-button" onClick={copyValue}>
           <Copy size={18} />
           Copy text

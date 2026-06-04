@@ -12,7 +12,7 @@ Live demo: https://ravin-sh2.github.io/command-center/
 - Notes and tasks saved locally in the browser
 - Focus timer with preset sessions
 - Weather planner mock tool for planning around conditions
-- QR-style share card generator with editable payload text
+- Scannable QR code generator with editable payload text
 - Local password generator using the browser crypto API
 - Map search launcher for Google Maps, OpenStreetMap, and Bing Maps
 - Music mode launcher for focus playlists
@@ -115,7 +115,7 @@ command-center/
 
 - Notes, tasks, and calculator history are stored in `localStorage`.
 - Passwords are generated locally in the browser and are not sent anywhere.
-- The QR tool creates a QR-style visual card, not a standards-certified QR code.
+- The QR tool uses the `qrcode` package to generate standards-compliant scannable QR codes.
 
 ## Author
 
